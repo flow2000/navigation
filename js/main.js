@@ -101,9 +101,20 @@ function time() {
 //调用规范https://api.vvhan.com
 fetch('https://api.vvhan.com/api/visitor.info').then(res=>res.json()).then((data)=>{
     // $('#wea_text').html(data.wea + '&nbsp;' + data.tem_night + '℃' + '&nbsp;~&nbsp;' + data.tem_day + '℃')
-    $('#wea_text').text(data.tq)
-    $('#tem1').text(data.high.replace("高温",""))
-    $('#tem2').text(data.low.replace("低温",""))
+	if (data.low===null || data.high===null){
+		fetch('https://ip.useragentinfo.com/json').then(res=>res.json()).then((data)=>{
+			if(!n.area){
+				n.area = n.city
+			}
+			fetch('https://restapi.amap.com/v3/weather/weatherInfo?key=ede94e146b9ee45e2db6fe7de1650a31&city='+n.area).then(res=>res.json()).then((n)=>{
+				$('#wea_text').text(n.weather)
+				$('#tem').text(n.temperature+'℃')
+			})
+		})
+	}else{
+		$('#wea_text').text(data.tq)
+		$('#tem').text(data.low.replace("低温","")+'℃'+ ~ data.high.replace("高温","")+'℃')
+	}
 }).catch(console.error)
     
 //Tab书签页
