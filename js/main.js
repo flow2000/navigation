@@ -113,7 +113,7 @@ fetch('https://api.vvhan.com/api/visitor.info').then(res=>res.json()).then((data
 		})
 	}else{
 		$('#wea_text').text(data.tq)
-		$('#tem').text(data.low.replace("低温","")+'℃'+ ~ data.high.replace("高温","")+'℃')
+		$('#tem').text(data.low.replace("低温","")+'~'+data.high.replace("高温",""))
 	}
 }).catch(console.error)
     
