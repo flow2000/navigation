@@ -101,12 +101,14 @@ function time() {
 //调用规范https://api.vvhan.com
 fetch('https://api.vvhan.com/api/visitor.info').then(res=>res.json()).then((data)=>{
     // $('#wea_text').html(data.wea + '&nbsp;' + data.tem_night + '℃' + '&nbsp;~&nbsp;' + data.tem_day + '℃')
+	
 	if (data.low===null || data.high===null){
 		fetch('https://ip.useragentinfo.com/json').then(res=>res.json()).then((data)=>{
-			if(!n.area){
-				n.area = n.city
+			if(!data.area){
+				data.area = data.city
 			}
-			fetch('https://restapi.amap.com/v3/weather/weatherInfo?key=ede94e146b9ee45e2db6fe7de1650a31&city='+n.area).then(res=>res.json()).then((n)=>{
+			fetch('https://restapi.amap.com/v3/weather/weatherInfo?key=ede94e146b9ee45e2db6fe7de1650a31&city='+data.area).then(res=>res.json()).then((n)=>{
+				n = n.lives[0]
 				$('#wea_text').text(n.weather)
 				$('#tem').text(n.temperature+'℃')
 			})
